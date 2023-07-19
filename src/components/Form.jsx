@@ -33,9 +33,9 @@ function Form() {
               placeholder="Confirm Password"
             />
           </div>
-          <div>
+          {/* <div>
             <a href="#">Want to register using Gmail?</a>
-          </div>
+          </div> */}
           <div>
             <button type="submit">Registration</button>
           </div>
