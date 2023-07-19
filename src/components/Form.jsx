@@ -1,5 +1,6 @@
 import React from "react";
 import { useFormik } from "formik";
+import { signUpSchema } from "../schemas";
 
 const initialValues = {
   name: "",
@@ -22,12 +23,16 @@ function Form() {
   // This time we are destructuring the formik object so that we dont have to write Formik.values.name etc
 
   // we can directly now write values.name
-  const { values, errors, handleBlur, handleChange, handleSubmit } = useFormik({
-    initialValues: initialValues,
-    onSubmit: (values) => {
-      console.log("The values are : ", values);
-    },
-  });
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: initialValues,
+      validationSchema: signUpSchema,
+      onSubmit: (values, action) => {
+        console.log("The values are : ", values);
+        action.resetForm();
+      },
+    });
+  //   console.log(errors);
 
   return (
     <>
@@ -42,10 +47,14 @@ function Form() {
               name="name"
               id="name"
               placeholder="Name"
+              autoComplete="off"
               value={values.name}
               onChange={handleChange}
               onBlur={handleBlur}
             />
+            <div>
+              {errors.name && touched.name ? <p>{errors.name}</p> : null}
+            </div>
           </div>
           <div>
             <label>Email</label>
@@ -54,10 +63,14 @@ function Form() {
               name="email"
               id="email"
               placeholder="Email"
+              autoComplete="off"
               value={values.email}
               onChange={handleChange}
               onBlur={handleBlur}
             />
+            <div>
+              {errors.email && touched.email ? <p>{errors.email}</p> : null}
+            </div>
           </div>
           <div>
             <label>Password</label>
@@ -66,10 +79,16 @@ function Form() {
               name="password"
               id="password"
               placeholder="Password"
+              autoComplete="off"
               value={values.password}
               onChange={handleChange}
               onBlur={handleBlur}
             />
+            <div>
+              {errors.password && touched.password ? (
+                <p>{errors.password}</p>
+              ) : null}
+            </div>
           </div>
           <div>
             <label>Confirm Password</label>
@@ -78,10 +97,16 @@ function Form() {
               name="confirm_password"
               id="confirm_password"
               placeholder="Confirm Password"
+              autoComplete="off"
               value={values.confirm_password}
               onChange={handleChange}
               onBlur={handleBlur}
             />
+            <div>
+              {errors.confirm_password && touched.confirm_password ? (
+                <p>{errors.confirm_password}</p>
+              ) : null}
+            </div>
           </div>
           {/* <div>
             <a href="#">Want to register using Gmail?</a>
